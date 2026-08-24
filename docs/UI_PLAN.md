@@ -84,4 +84,4 @@ Purpose:
 Purpose:
 - View charts
 - Accident trends
-- High-risk areas
+- High-risk areas.
