@@ -1,0 +1,64 @@
+{% load static %}<!doctype html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}RoadRisk AI{% endblock %} &middot; RoadRisk AI</title>
+  <link href="{% static 'vendor/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/icons/bootstrap-icons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+<body>
+{% with u=request.resolver_match.url_name %}
+<aside class="sidebar" id="sidebar">
+  <a href="{% url 'home' %}" class="brand"><span class="brand-logo"><i class="bi bi-cone-striped"></i></span><span><b>RoadRisk AI</b><small>Road safety intelligence</small></span></a>
+
+  <div class="nav-sec">Explore</div>
+  <a class="side-link {% if u == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="bi bi-house-door"></i>Home</a>
+  <a class="side-link {% if u == 'search' %}active{% endif %}" href="{% url 'search' %}"><i class="bi bi-search"></i>Road Risk Search</a>
+  <a class="side-link {% if u == 'states' %}active{% endif %}" href="{% url 'states' %}"><i class="bi bi-globe-asia-australia"></i>India Statistics</a>
+
+  {% if user.is_authenticated %}
+  <div class="nav-sec">Analyse</div>
+  <a class="side-link {% if u == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+  <a class="side-link {% if u == 'predict' or u == 'prediction_detail' %}active{% endif %}" href="{% url 'predict' %}"><i class="bi bi-cpu"></i>Predict Severity</a>
+  <a class="side-link {% if u == 'history' %}active{% endif %}" href="{% url 'history' %}"><i class="bi bi-file-earmark-text"></i>Predictions &amp; Reports</a>
+  {% if user.is_admin_role %}
+  <div class="nav-sec">Administration</div>
+  <a class="side-link {% if u == 'dataset_list' %}active{% endif %}" href="{% url 'dataset_list' %}"><i class="bi bi-database"></i>Datasets</a>
+  <a class="side-link {% if u == 'train' %}active{% endif %}" href="{% url 'train' %}"><i class="bi bi-diagram-3"></i>Train &amp; Compare Models</a>
+  <a class="side-link {% if u == 'user_list' %}active{% endif %}" href="{% url 'user_list' %}"><i class="bi bi-people"></i>Users &amp; Roles</a>
+  <a class="side-link {% if u == 'powerbi' %}active{% endif %}" href="{% url 'powerbi' %}"><i class="bi bi-bar-chart-line"></i>Power BI</a>
+  <a class="side-link" href="/django-admin/"><i class="bi bi-gear"></i>Django Admin</a>
+  {% endif %}
+  {% endif %}
+
+  <div class="side-user">
+  {% if user.is_authenticated %}
+    <div class="d-flex align-items-center gap-2 mb-2"><div class="avatar">{{ user.username|slice:":1"|upper }}</div>
+      <div><div class="fw-semibold">{{ user.username }}</div><small class="text-muted">{{ user.role_label }}</small></div></div>
+    <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm w-100"><i class="bi bi-box-arrow-right me-1"></i>Logout</button></form>
+  {% else %}
+    <div class="d-grid gap-2"><a class="btn btn-rr btn-sm" href="{% url 'login' %}">Login</a><a class="btn btn-ghost btn-sm" href="{% url 'register' %}">Create account</a></div>
+  {% endif %}
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <button class="menu-btn" id="menuBtn" aria-label="Menu"><i class="bi bi-list"></i></button>
+    <div class="flex-grow-1"><h1>{% block page_title %}RoadRisk AI{% endblock %}</h1><p>{% block page_sub %}{% endblock %}</p></div>
+    {% block top_actions %}{% endblock %}
+  </header>
+  <main class="content">
+    {% for m in messages %}<div class="alert alert-{{ m.tags|default:'info' }} alert-dismissible fade show">{{ m }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">RoadRisk AI &middot; Mini Project MCA40130 &middot; MIT World Peace University, Pune &nbsp;|&nbsp; Accident data: NHAI highway dataset (Zenodo 10.5281/zenodo.16946653, CC BY 4.0) &middot; State statistics: NCRB ADSI Table 1A.2</footer>
+</div>
+{% endwith %}
+<script src="{% static 'vendor/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/chart.umd.js' %}"></script>
+<script src="{% static 'js/charts.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

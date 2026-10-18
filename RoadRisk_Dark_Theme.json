@@ -1,0 +1,24 @@
+{
+  "name": "RoadRisk Dark",
+  "dataColors": ["#5B8CFF", "#22D3EE", "#7C5CFF", "#F59E0B", "#22C55E", "#EF4444", "#EC4899", "#14B8A6"],
+  "background": "#0D1530",
+  "foreground": "#E8EEFC",
+  "tableAccent": "#5B8CFF",
+  "good": "#22C55E",
+  "neutral": "#F59E0B",
+  "bad": "#EF4444",
+  "maximum": "#EF4444",
+  "center": "#F59E0B",
+  "minimum": "#22C55E",
+  "textClasses": {
+    "label": { "color": "#E8EEFC", "fontFace": "Segoe UI" },
+    "title": { "color": "#FFFFFF", "fontFace": "Segoe UI Semibold" }
+  },
+  "visualStyles": {
+    "*": { "*": {
+      "background": [{ "color": { "solid": { "color": "#111B38" } }, "transparency": 0 }],
+      "border": [{ "color": { "solid": { "color": "#22335C" } }, "show": true }]
+    } },
+    "page": { "*": { "background": [{ "color": { "solid": { "color": "#080E1F" } }, "transparency": 0 }] } }
+  }
+}
